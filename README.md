@@ -13,14 +13,14 @@ get our docker trusted build like this:
 
 
 ```
-docker pull kartoza/mapproxy
+docker pull terrestris/mapproxy
 ```
 
 To build the image yourself without apt-cacher (also consumes more bandwidth
 since deb packages need to be refetched each time you build) do:
 
 ```
-docker build -t kartoza/mapproxy git://github.com/kartoza/docker-mapproxy
+docker build -t terrestris/mapproxy git://github.com/terrestris/docker-mapproxy
 ```
 
 To build with apt-cache (and minimised download requirements) do you need to
@@ -29,13 +29,13 @@ match your cacher host. Then build using a local url instead of directly from
 github.
 
 ```
-git clone git://github.com/kartoza/docker-mapproxy
+git clone git://github.com/terrestris/docker-mapproxy
 ```
 
 Now edit ``71-apt-cacher-ng`` then do:
 
 ```
-docker build -t kartoza/mapproxy .
+docker build -t terrestris/mapproxy .
 ```
 
 # Run
@@ -44,7 +44,7 @@ To run a mapproxy container do:
 
 ```
 docker run --name "mapproxy" -p 8080:8080 -d -t \
-     kartoza/mapproxy
+     terrestris/mapproxy
 ```
 
 Typically you will want to mount the mapproxy volume, otherwise you won't be
@@ -53,7 +53,7 @@ able to edit the configs:
 ```
 mkdir mapproxy
 docker run --name "mapproxy" -p 8080:8080 -d -t -v \
-   `pwd`/mapproxy:/mapproxy kartoza/mapproxy
+   `pwd`/mapproxy:/mapproxy terrestris/mapproxy
 ```
 
 The first time your run the container, mapproxy basic default configuration
@@ -108,7 +108,7 @@ Here is a sample from my fig configuration:
 
 ```
 mapproxy:
-  image: kartoza/mapproxy
+  image: terrestris/mapproxy
   hostname: mapproxy
   volumes:
     - ../mapproxy:/mapproxy
