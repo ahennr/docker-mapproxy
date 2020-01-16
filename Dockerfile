@@ -7,18 +7,16 @@ RUN apt-get -y update
 #-------------Application Specific Stuff ----------------------------------------------------
 
 RUN apt-get install -y \
-    python-yaml \
-    python-pil \
     libproj13 \
     libgeos-dev \
     python-lxml \
-    python3-shapely \
     libgdal-dev
-RUN pip install MapProxy uwsgi
+RUN pip install MapProxy==1.12.0 uwsgi
 
 EXPOSE 8080
 
 ADD uwsgi.conf /uwsgi.conf
+
 ADD start.sh /start.sh
 RUN chmod 0755 /start.sh
 
