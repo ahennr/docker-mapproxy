@@ -16,26 +16,10 @@ get our docker trusted build like this:
 docker pull terrestris/mapproxy
 ```
 
-To build the image yourself without apt-cacher (also consumes more bandwidth
-since deb packages need to be refetched each time you build) do:
+To build the image yourself do:
 
 ```
 docker build -t terrestris/mapproxy git://github.com/terrestris/docker-mapproxy
-```
-
-To build with apt-cache (and minimised download requirements) do you need to
-clone this repo locally first and modify the contents of 71-apt-cacher-ng to
-match your cacher host. Then build using a local url instead of directly from
-github.
-
-```
-git clone git://github.com/terrestris/docker-mapproxy
-```
-
-Now edit ``71-apt-cacher-ng`` then do:
-
-```
-docker build -t terrestris/mapproxy .
 ```
 
 # Run
@@ -130,8 +114,3 @@ In the example below the nginx container is running on IP address
 ```
 http://172.17.0.135:8080/mapproxy/service
 ```
-
------------
-
-Tim Sutton (tim@kartoza.com)
-August 2014

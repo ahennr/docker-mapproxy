@@ -6,7 +6,7 @@ USER_NAME=`ls -lah / | grep mapproxy | awk '{print $3}'`
 groupadd -g $GROUP_ID mapproxy
 useradd --shell /bin/bash --uid $USER_ID --gid $GROUP_ID $USER_NAME
 
-# Create a default mapproxy config is one does not exist in /mapproxy
+# Create a default mapproxy config if one does not exist in /mapproxy
 if [ ! -f /mapproxy/mapproxy.yaml ]
 then
   su $USER_NAME -c "mapproxy-util create -t base-config mapproxy"
