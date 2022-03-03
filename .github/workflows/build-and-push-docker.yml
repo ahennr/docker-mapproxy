@@ -1,0 +1,41 @@
+name: Docker build and push
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+jobs:
+  docker:
+    name: docker build and push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🙂
+        uses: actions/checkout@v2
+      - name: Create image and tag names 😊
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: terrestris/mapproxy
+          tags: |
+            type=ref,event=tag
+      - name: Generate docker tag 😝
+        run: echo "docker_tag=$(echo ${{ steps.meta.outputs.tags }} | sed 's|^terrestris/mapproxy:v|terrestris/mapproxy:|')" >> $GITHUB_ENV
+        id: generate-docker-tag
+      - name: Set up QEMU 🤗
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx 🤯
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub 😎
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN  }}
+      - name: Build and push 🥳
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ env.docker_tag }}, terrestris/mapproxy:latest
+          context: .
+          file: Dockerfile
