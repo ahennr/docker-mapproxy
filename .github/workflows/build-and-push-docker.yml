@@ -1,6 +1,10 @@
 name: Docker build and push
 
 on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Tag for manual build trigger'
   push:
     tags: ['v*.*.*']
 
