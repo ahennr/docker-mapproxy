@@ -14,7 +14,8 @@ RUN apt-get install -y \
     libgeos-dev \
     python3-lxml \
     libgdal-dev \
-    python3-shapely
+    python3-shapely \
+    && apt-get clean
 RUN pip install MapProxy==1.14.0 pyproj uwsgi
 
 EXPOSE 8080
