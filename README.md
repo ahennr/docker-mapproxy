@@ -95,3 +95,52 @@ Once the containers are up and running you can open the mapproxy demo page by vi
 ```
 http://localhost/mapproxy/demo/
 ```
+
+## Reverse proxy providing seed endpoint
+`nginx.conf`
+```
+upstream mapproxy {
+    server mapproxy-srv:8080;
+}
+upstream mapproxy-seed {
+    server mapproxy-srv:9090;
+}
+server {
+    listen 80;
+
+    root /var/www/html/;
+
+    location /mapproxy/ {
+        rewrite /mapproxy/(.+) /$1 break;
+        uwsgi_param SCRIPT_NAME /mapproxy;
+        uwsgi_pass mapproxy;
+        include uwsgi_params;
+    }
+
+    location /mapproxy-seed/ {
+        rewrite /mapproxy-seed/(.+) /$1 break;
+        uwsgi_param SCRIPT_NAME /mapproxy;
+        uwsgi_pass mapproxy-seed;
+        include uwsgi_params;
+    }
+}
+```
+and `docker-compose.yml` (run `docker build -t mapproxy-seed-test .` at first)
+
+```
+version: "3.5"
+services:
+  mapproxy-srv:
+    image: mapproxy-seed-test
+    restart: always
+    volumes:
+        - ./mapproxy/:/mapproxy/
+  nginx-srv:
+    image: nginx:latest
+    ports:
+     - 80:80
+    volumes:
+      - ./nginx-example.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - mapproxy-srv
+```
