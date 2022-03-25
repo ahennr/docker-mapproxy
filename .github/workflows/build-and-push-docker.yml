@@ -5,6 +5,7 @@ on:
     inputs:
       tags:
         description: 'Tag for manual build trigger'
+        required: true
   push:
     tags: ['v*.*.*']
 
