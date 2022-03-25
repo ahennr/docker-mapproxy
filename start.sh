@@ -13,4 +13,5 @@ then
 fi
 cd /mapproxy
 su $USER_NAME -c "mapproxy-util create -t wsgi-app -f mapproxy.yaml /mapproxy/app.py"
-su $USER_NAME -c "uwsgi --ini /uwsgi.conf"
+su $USER_NAME -c "mapproxy-util create -t wsgi-seed-app -f mapproxy.yaml /mapproxy/rest-seed.py"
+su $USER_NAME -c "uwsgi  --emperor /opt/*.ini"
