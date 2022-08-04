@@ -1,12 +1,9 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 FROM python:3.9-slim
-LABEL maintainer="Sebastian Goetsch<goetsch@terrestris.de>"
-
-RUN apt-get -y update
+LABEL maintainer="terrestris GmbH & Co. KG <info@terrestris.de>"
 
 #-------------Application Specific Stuff ----------------------------------------------------
-
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     libproj19 \
     python3-pyproj \
     python3-pil \
@@ -14,7 +11,9 @@ RUN apt-get install -y \
     libgeos-dev \
     python3-lxml \
     libgdal-dev \
-    python3-shapely
+    python3-shapely \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN pip install MapProxy==1.14.0 pyproj uwsgi
 
 EXPOSE 8080
