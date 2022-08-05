@@ -17,13 +17,9 @@ RUN apt-get install -y \
     python3-shapely \
     git
 
-#RUN pip install MapProxy==1.14.0 pyproj uwsgi
-RUN pip install pyproj uwsgi
-RUN pip install git+https://github.com/ahennr/mapproxy.git@d8a59ffa775c3f541fb795e9c4a313ca8aab28b5
+RUN pip install pyproj six werkzeug uwsgi 'MapProxy>1.15'
+RUN pip install git+https://github.com/ahennr/mapproxy-rest-endpoint-plugin.git@d47300d00df4f614cd3bd637265634669fa1b695
 
-EXPOSE 8080
-
-# ADD uwsgi.conf /uwsgi.conf
 COPY uwsgi.*.ini /opt/
 
 ADD start.sh /start.sh
