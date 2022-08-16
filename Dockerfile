@@ -1,5 +1,5 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
-FROM python:3.9-slim
+FROM python:3.10-slim
 LABEL maintainer="terrestris GmbH & Co. KG <info@terrestris.de>"
 
 #-------------Application Specific Stuff ----------------------------------------------------
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     python3-shapely \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install MapProxy==1.14.0 pyproj uwsgi
+RUN pip install MapProxy==1.15.1 pyproj uwsgi
 
 EXPOSE 8080
 
