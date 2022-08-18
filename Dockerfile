@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
     libgeos-dev \
     python3-lxml \
     libgdal-dev \
+    build-essential \
+    python-dev \
     python3-shapely \
     && rm -rf /var/lib/apt/lists/*
 
