@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     python3-shapely \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install MapProxy==1.15.1 pyproj uwsgi
+RUN pip install MapProxy==1.15.1 pyproj uwsgi six werkzeug
 
 EXPOSE 8080
 
